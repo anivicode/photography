@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Flowers Gallery</title>
+
+<link rel="stylesheet" href="gallery.css">
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<h1>🌸 Nature Gallery</h1>
+
+<div class="gallery">
+
+  <!-- FLOWER 1 -->
+  <div class="photo-card">
+    <img src="flower.webp" alt="Flower">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="flower.webp" download>
+        <i class="fa-solid fa-download"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- FLOWER 2 -->
+  <div class="photo-card">
+    <img src="flower1.webp" alt="Flower">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="flower1.webp" download>
+        <i class="fa-solid fa-download"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- FLOWER 3 -->
+  <div class="photo-card">
+    <img src="flower2.webp" alt="Flower">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="flower2.webp" download>
+        <i class="fa-solid fa-download"></i>
+      </a>
+    </div>
+  </div>
+  
+  <div class="photo-card">
+    <img src="forest.webp" alt="Flower">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="forest.webp" download>
+        <i class="fa-solid fa-download"></i>
+      </a>
+    </div>
+  </div>
+  
+  <div class="photo-card">
+    <img src="forest1.webp" alt="Flower">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="forest1.webp" download>
+        <i class="fa-solid fa-download"></i>
+      </a>
+    </div>
+  </div>
+  <div class="photo-card">
+    <img src="forest2.webp" alt="Flower">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="forest2.webp" download>
+        <i class="fa-solid fa-download"></i>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// LIKE
+function like(icon) {
+    let src = icon.closest(".photo-card").querySelector("img").src;
+
+    let liked = JSON.parse(localStorage.getItem("liked")) || [];
+
+    if (!liked.includes(src)) {
+        liked.push(src);
+        localStorage.setItem("liked", JSON.stringify(liked));
+        alert("Added to Liked ❤️");
+    }
+
+    icon.style.color = "red";
+}
+
+// SAVE
+document.querySelectorAll(".fa-bookmark").forEach(icon => {
+    icon.addEventListener("click", function () {
+        let src = this.closest(".photo-card").querySelector("img").src;
+
+        let saved = JSON.parse(localStorage.getItem("saved")) || [];
+
+        if (!saved.includes(src)) {
+            saved.push(src);
+            localStorage.setItem("saved", JSON.stringify(saved));
+            alert("Saved 💾");
+        }
+
+        this.style.color = "blue";
+    });
+});
+
+// DOWNLOAD
+document.querySelectorAll(".fa-download").forEach(icon => {
+    icon.addEventListener("click", function () {
+        let src = this.closest(".photo-card").querySelector("img").src;
+
+        let downloaded = JSON.parse(localStorage.getItem("downloaded")) || [];
+
+        if (!downloaded.includes(src)) {
+            downloaded.push(src);
+            localStorage.setItem("downloaded", JSON.stringify(downloaded));
+        }
+
+        // trigger download
+        let link = document.createElement("a");
+        link.href = src;
+        link.download = src;
+        link.click();
+    });
+});
+</script>
+
+</body>
+</html>

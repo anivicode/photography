@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Buildings Gallery</title>
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* GENERAL */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background:linear-gradient(to right, #2193b0, #6dd5ed) ;
+    text-align: center;
+}
+
+h1 {
+    margin: 20px 0;
+}
+
+/* GALLERY */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* BUTTONS */
+.actions {
+    margin-top: 10px;
+}
+
+.actions i {
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    transition: 0.3s;
+}
+
+.actions i:hover {
+    color: #ff4d4d;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🏢 Buildings Gallery</h1>
+
+<div class="gallery">
+
+<!-- IMAGE 1 -->
+<div class="card">
+    <img src="build1.jpg" alt="Build1">
+    <div class="actions">
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-share"></i>
+        <i class="fa fa-bookmark"></i>
+        <a href="build1.jpg" download>
+            <i class="fa fa-download"></i>
+        </a>
+    </div>
+</div>
+
+<!-- IMAGE 2 -->
+<div class="card">
+    <img src="build2.jpg" alt="Build2">
+    <div class="actions">
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-share"></i>
+        <i class="fa fa-bookmark"></i>
+        <a href="build2.jpg" download>
+            <i class="fa fa-download"></i>
+        </a>
+    </div>
+</div>
+
+<!-- IMAGE 3 -->
+<div class="card">
+    <img src="build3.jpg" alt="Build3">
+    <div class="actions">
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-share"></i>
+        <i class="fa fa-bookmark"></i>
+        <a href="build3.jpg" download>
+            <i class="fa fa-download"></i>
+        </a>
+    </div>
+</div>
+
+<!-- IMAGE 4 -->
+<div class="card">
+    <img src="build4.jpg" alt="Build4">
+    <div class="actions">
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-share"></i>
+        <i class="fa fa-bookmark"></i>
+        <a href="build4.jpg" download>
+            <i class="fa fa-download"></i>
+        </a>
+    </div>
+</div>
+
+<!-- IMAGE 5 -->
+<div class="card">
+    <img src="build5.jpg" alt="Build5">
+    <div class="actions">
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-share"></i>
+        <i class="fa fa-bookmark"></i>
+        <a href="build5.jpg" download>
+            <i class="fa fa-download"></i>
+        </a>
+    </div>
+</div>
+
+<!-- IMAGE 6 -->
+<div class="card">
+    <img src="build.jpg" alt="Build">
+    <div class="actions">
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-share"></i>
+        <i class="fa fa-bookmark"></i>
+        <a href="build.jpg" download>
+            <i class="fa fa-download"></i>
+        </a>
+    </div>
+</div>
+
+</div>
+<script>
+// LIKE
+function like(icon) {
+    let src = icon.closest(".photo-card").querySelector("img").src;
+
+    let liked = JSON.parse(localStorage.getItem("liked")) || [];
+
+    if (!liked.includes(src)) {
+        liked.push(src);
+        localStorage.setItem("liked", JSON.stringify(liked));
+        alert("Added to Liked ❤️");
+    }
+
+    icon.style.color = "red";
+}
+
+// SAVE
+document.querySelectorAll(".fa-bookmark").forEach(icon => {
+    icon.addEventListener("click", function () {
+        let src = this.closest(".photo-card").querySelector("img").src;
+
+        let saved = JSON.parse(localStorage.getItem("saved")) || [];
+
+        if (!saved.includes(src)) {
+            saved.push(src);
+            localStorage.setItem("saved", JSON.stringify(saved));
+            alert("Saved 💾");
+        }
+
+        this.style.color = "blue";
+    });
+});
+
+// DOWNLOAD
+document.querySelectorAll(".fa-download").forEach(icon => {
+    icon.addEventListener("click", function () {
+        let src = this.closest(".photo-card").querySelector("img").src;
+
+        let downloaded = JSON.parse(localStorage.getItem("downloaded")) || [];
+
+        if (!downloaded.includes(src)) {
+            downloaded.push(src);
+            localStorage.setItem("downloaded", JSON.stringify(downloaded));
+        }
+
+        // trigger download
+        let link = document.createElement("a");
+        link.href = src;
+        link.download = src;
+        link.click();
+    });
+});
+</script>
+</body>
+</html>

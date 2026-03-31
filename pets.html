@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+ <html lang="en"> 
+ <head>
+ <meta charset="UTF-8">
+ <title>Pets Gallery</title> 
+ <link rel="stylesheet" href="gallery.css"> 
+ <!-- ICONS --> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ </head>
+ <body>
+
+<h1>🐾 Pets Gallery</h1>
+
+<div class="gallery">
+
+  <!-- DOG IMAGES -->
+  <div class="photo-card">
+    <img src="dog1.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="dog1.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <img src="dog.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="dog.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <img src="dog2.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="dog2.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+
+  <!-- CAT IMAGES -->
+  <div class="photo-card">
+    <img src="cat.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="cat.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <img src="cat1.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="cat1.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <img src="cat2.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="cat2.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+
+<!-- BIRD IMAGES -->
+ <div class="photo-card">
+    <img src="bird1.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="bird2.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+
+<div class="photo-card">
+    <img src="bird2.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="bird2.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+  
+  <div class="photo-card">
+    <img src="bird3.jpg">
+    <div class="icons">
+      <i class="fa-solid fa-heart" onclick="like(this)"></i>
+      <i class="fa-solid fa-share-nodes"></i>
+      <i class="fa-solid fa-bookmark"></i>
+      <a href="bird3.jpg" download><i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+  </div>
+<script>
+// LIKE
+function like(icon) {
+    let src = icon.closest(".photo-card").querySelector("img").src;
+
+    let liked = JSON.parse(localStorage.getItem("liked")) || [];
+
+    if (!liked.includes(src)) {
+        liked.push(src);
+        localStorage.setItem("liked", JSON.stringify(liked));
+        alert("Added to Liked ❤️");
+    }
+
+    icon.style.color = "red";
+}
+
+// SAVE
+document.querySelectorAll(".fa-bookmark").forEach(icon => {
+    icon.addEventListener("click", function () {
+        let src = this.closest(".photo-card").querySelector("img").src;
+
+        let saved = JSON.parse(localStorage.getItem("saved")) || [];
+
+        if (!saved.includes(src)) {
+            saved.push(src);
+            localStorage.setItem("saved", JSON.stringify(saved));
+            alert("Saved 💾");
+        }
+
+        this.style.color = "blue";
+    });
+});
+
+// DOWNLOAD
+document.querySelectorAll(".fa-download").forEach(icon => {
+    icon.addEventListener("click", function () {
+        let src = this.closest(".photo-card").querySelector("img").src;
+
+        let downloaded = JSON.parse(localStorage.getItem("downloaded")) || [];
+
+        if (!downloaded.includes(src)) {
+            downloaded.push(src);
+            localStorage.setItem("downloaded", JSON.stringify(downloaded));
+        }
+
+        // trigger download
+        let link = document.createElement("a");
+        link.href = src;
+        link.download = src;
+        link.click();
+    });
+});
+</script>
+
+</body>

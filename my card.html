@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Collection</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    margin:0;
+    text-align:center;
+}
+
+h1{
+    margin:20px;
+}
+
+.section-box{
+    background:white;
+    margin:20px auto;          /* center horizontally */
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+
+    width:fit-content;
+	min-width:300px;
+    max-width:95%;	/* controls white area width */
+}
+
+.gallery{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-start;   /* align from left */
+    gap:20px;
+}
+.gallery p{
+    width:100%;
+    text-align:center;
+    color:gray;
+}
+
+.card{
+    background:#fff;
+    padding:10px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card img{
+    width:200px;
+    height:150px;
+    object-fit:cover;
+}
+
+button{
+    margin-top:5px;
+    padding:5px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.remove{ background:red; color:white; }
+.restore{ background:green; color:white; }
+
+.cart-icon{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #4da6ff;
+    padding: 12px;
+    border-radius: 50%;
+}
+.cart-icon i{
+    color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HOME BUTTON -->
+<div class="cart-icon">
+    <a href="home.html">
+        <i class="fa-solid fa-house"></i>
+    </a>
+</div>
+
+<h1>📂 Visual Vault</h1>
+
+<!-- ❤️ LIKED -->
+<div class="section-box">
+    <h2>❤️ Liked</h2>
+    <div class="gallery" id="liked"></div>
+</div>
+
+<!-- 💾 SAVED -->
+<div class="section-box">
+    <h2>💾 Saved</h2>
+    <div class="gallery" id="saved"></div>
+</div>
+
+<!-- ⬇ DOWNLOADED -->
+<div class="section-box">
+    <h2>⬇ Downloaded</h2>
+    <div class="gallery" id="downloaded"></div>
+</div>
+
+<!-- 🗑 RECENTLY DELETED -->
+<div class="section-box">
+    <h2>🗑 Recently Deleted</h2>
+    <div class="gallery" id="deleted"></div>
+</div>
+
+<script>
+// LOAD SECTION WITH EMPTY MESSAGE
+function loadSection(key, id){
+    let data = JSON.parse(localStorage.getItem(key)) || [];
+    let container = document.getElementById(id);
+
+    container.innerHTML = "";
+
+    if(data.length === 0){
+        container.innerHTML = "<p>No images yet 😔</p>";
+        return;
+    }
+
+    data.forEach((src, index)=>{
+        container.innerHTML += `
+        <div class="card">
+            <img src="${src}">
+            <br>
+            <button class="remove" onclick="removeItem('${key}', ${index})">Remove</button>
+        </div>`;
+    });
+}
+
+// REMOVE → MOVE TO DELETED
+function removeItem(key, index){
+    let data = JSON.parse(localStorage.getItem(key)) || [];
+    let removedItem = data[index];
+
+    data.splice(index,1);
+    localStorage.setItem(key, JSON.stringify(data));
+
+    let deleted = JSON.parse(localStorage.getItem("deleted")) || [];
+    deleted.push(removedItem);
+    localStorage.setItem("deleted", JSON.stringify(deleted));
+
+    loadAll();
+}
+
+// LOAD DELETED WITH EMPTY MESSAGE + DELETE OPTION
+function loadDeleted(){
+    let data = JSON.parse(localStorage.getItem("deleted")) || [];
+    let container = document.getElementById("deleted");
+
+    container.innerHTML = "";
+
+    if(data.length === 0){
+        container.innerHTML = "<p>No deleted images 🗑</p>";
+        return;
+    }
+
+    data.forEach((src, index)=>{
+        container.innerHTML += `
+        <div class="card">
+            <img src="${src}">
+            <br>
+            <button class="restore" onclick="restoreItem(${index})">Restore</button>
+            <button class="remove" onclick="deleteForever(${index})">Delete Permanently</button>
+        </div>`;
+    });
+}
+
+// RESTORE
+function restoreItem(index){
+    let deleted = JSON.parse(localStorage.getItem("deleted")) || [];
+    let item = deleted[index];
+
+    deleted.splice(index,1);
+    localStorage.setItem("deleted", JSON.stringify(deleted));
+
+    let saved = JSON.parse(localStorage.getItem("saved")) || [];
+    saved.push(item);
+    localStorage.setItem("saved", JSON.stringify(saved));
+
+    loadAll();
+}
+
+// DELETE FOREVER
+function deleteForever(index){
+    let deleted = JSON.parse(localStorage.getItem("deleted")) || [];
+
+    deleted.splice(index,1);
+    localStorage.setItem("deleted", JSON.stringify(deleted));
+
+    loadAll();
+}
+
+// LOAD ALL
+function loadAll(){
+    loadSection("liked","liked");
+    loadSection("saved","saved");
+    loadSection("downloaded","downloaded");
+    loadDeleted();
+}
+
+window.onload = loadAll;
+</script>
+
+</body>
+</html>

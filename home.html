@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photos</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+if(localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html";
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="cart-icon">
+    <a href="my card.html">
+        <i class="fa-solid fa-cart-shopping"></i>
+    </a>
+</div>
+<div class="search-box">
+    <h2>🔍 Visual Explorer</h2>
+ 
+
+    <input type="text" list="photoList" placeholder="Search photos...">
+
+    <datalist id="photoList">
+        <option value="Animals">
+        <option value="Architecture">
+        <option value="Beach">
+        <option value="Birds">
+        <option value="Cars">
+        <option value="City">
+        <option value="Dogs">
+        <option value="Flowers">
+        <option value="Forest">
+        <option value="Landscape">
+        <option value="Mountains">
+        <option value="Nature">
+        <option value="Portrait">
+        <option value="Sunset">
+        <option value="Wildlife">
+    </datalist>
+</div>
+<div class="container">
+
+<h1>📸 Capture</h1>
+
+<p>Select a Category</p>
+
+<div class="categories">
+<div class="card">
+  <a href="pets.html">
+                <img src="pet.jpg" alt="Pets">
+                <a href="#">Pets</a>
+            </div>
+<div class="card">
+<a href="cars.html">
+<img src="cars.jpg" alt="Cars">
+<a href="#">Cars</a>
+</div>
+
+<div class="card">
+<a href="pets.html">
+<img src="birds.jpg" alt="Birds">
+<a href="#">Birds</a>
+</div>
+
+<div class="card">
+<a href="flower.html">
+<img src="flower.jpg" alt="Flowers">
+<a href="#">Flowers</a>
+</div>
+
+<div class="card">
+<a href="building.html">
+<img src="building.jpg" alt="Buildings">
+<a href="#">Buildings</a>
+</div>
+
+<div class="card">
+<a href="flower.html">
+<img src="forest.jpg" alt="Forest">
+<a href="#">Forest</a>
+</div>
+
+</div>
+
+</div>
+<script>
+function logout() {
+    localStorage.removeItem("loggedIn");
+    window.location.href = "index.html";
+}
+</script>
+</body>
+</html>
